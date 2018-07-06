@@ -1,37 +1,92 @@
-## Welcome to GitHub Pages
+# Latex tips and tricks
 
-You can use the [editor on GitHub](https://github.com/gborghesan/latex_notes/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
-
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
-
-### Markdown
-
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
-
-```markdown
-Syntax highlighted code block
-
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
+## In-line enumeration
+To save space, it is usegful to make a enumered list in the form of _i)_ , _ii)_, etc.
+for doing so, I define the following environment:
 ```
+% packages for inline lists
+\usepackage{paralist}
+\newenvironment{inparlist}{\begin{inparaenum}[\itshape i)]}{\end{inparaenum}}
+```
+The usage is the same of _itemize_ environment.
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
+## inclusion of figures
+I use mainly to types of figures
 
-### Jekyll Themes
+- svg files made in inkscape
+- eps files made in matlab
 
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/gborghesan/latex_notes/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
+for both, I use psfrag commands to have all the text in figure uniform.
+psfrag is a comman that allows to substitute a string in a eps figure with another one. THe main advantage is the it is possible to control the type of charater and size will not scale by scaling the figure. in addittion math formulas can be inserted in the figure.
+See [psfrag documentation](https://ctan.org/pkg/psfrag?lang=en) for more info.
+### preamble
+in the preable, I add the following:
 
-### Support or Contact
+```latex
+%\newcommand{\REFRESHFIGURES}{} % uncomment this to regenerate the figures
+\ifdefined\REFRESHFIGURES
+\usepackage{auto-pst-pdf}%this one is for eps 
+\newcommand{\executeiffilenewer}[3]{%
+ \ifnum\pdfstrcmp{\pdffilemoddate{#1}}%
+ {\pdffilemoddate{#2}}>0%
+ {\immediate\write18{#3}}\fi%
+}
 
-Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+\newcommand{\includesvg}[1]{%
+ \executeiffilenewer{images/#1.svg}{images/#1.pdf}%
+ {inkscape -z -D --file=images/#1.svg %
+ --export-area-page %
+ --export-pdf=images/#1.pdf --export-latex}%
+ \input{images/#1.pdf_tex}%
+}
+\else
+\usepackage[off]{auto-pst-pdf}
+
+\newcommand{\includesvg}[1]{%
+ \input{images/#1.pdf_tex}%
+ } 
+\fi
+```
+The figure are generated only if the  `\REFRESHFIGURES` is defined.
+The eps files must be in _images_ sub-deirectory
+This code is largely taken from [here](http://tug.ctan.org/info/svg-inkscape/InkscapePDFLaTeX.pdf)
+also check there how to make the svgs.
+**important**
+
+- Tested in ubuntu
+- pdflatex is used for compiling
+- pdf latex needs to call inkscape so
+  - inkscape must be istalled
+  - pdflatex must be called with the *-shell-escape* flag, e.g.:
+```bash
+pdflatex -shell-escape main.tex
+```
+### adding an svg figure
+in the text, to add a figure, the following code can be use
+```latex
+\begin{figure}\centering
+  	\def\svgwidth{\columnwidth}
+  	\includesvg{figure_file}
+\caption{\label{fig:figure1} A nice caption.}
+\end{figure}
+```
+additionals psfrag commands can be used, before the `includesvg` command.
+### adding an eps figure
+this i do mainly for matlab-generated graphs, but can be useful also for schemes generated with [Dia](https://sourceforge.net/projects/dia-installer/)
+
+Following examples insert two subfigures (and needs also `\usepackage{subfig}` in the preamble)
+```latex
+\begin{figure}
+\centering
+\include{macro_psfrag}
+\subfloat[caption of subfig 1 \label{fig:fig1_subfig1}]{
+  \psfragfig[width=0.3892\columnwidth]{filename_subfig1}
+}
+\hfill
+\subfloat[caption of subfig 2 \label{fig:fig1_subfig2}]{
+   \psfragfig[width= 0.56 \columnwidth]{filename_subfig2}
+}
+\caption{Main caption of the figure \label{fig:main_figure}}
+\end{figure}
+```
+The command `\psfragfig` is part of the pstool package. it automatically generates a pdf files that contains all the images, with the text already inthere. is quite handy also for figure reuse.
