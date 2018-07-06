@@ -25,25 +25,25 @@ in the preable, I add the following:
 ```latex
 %\newcommand{\REFRESHFIGURES}{} % uncomment this to regenerate the figures
 \ifdefined\REFRESHFIGURES
-\usepackage{auto-pst-pdf}%this one is for eps 
-\newcommand{\executeiffilenewer}[3]{%
- \ifnum\pdfstrcmp{\pdffilemoddate{#1}}%
- {\pdffilemoddate{#2}}>0%
- {\immediate\write18{#3}}\fi%
+\usepackage{auto-pst-pdf} %this one is for eps 
+\newcommand{\executeiffilenewer}[3]{
+ \ifnum\pdfstrcmp{\pdffilemoddate{#1}}
+ {\pdffilemoddate{#2}}>0
+ {\immediate\write18{#3}}\fi
 }
 
-\newcommand{\includesvg}[1]{%
- \executeiffilenewer{images/#1.svg}{images/#1.pdf}%
- {inkscape -z -D --file=images/#1.svg %
- --export-area-page %
- --export-pdf=images/#1.pdf --export-latex}%
- \input{images/#1.pdf_tex}%
+\newcommand{\includesvg}[1]{
+ \executeiffilenewer{images/#1.svg}{images/#1.pdf}
+ {inkscape -z -D --file=images/#1.svg 
+ --export-area-page 
+ --export-pdf=images/#1.pdf --export-latex}
+ \input{images/#1.pdf_tex}
 }
 \else
 \usepackage[off]{auto-pst-pdf}
 
-\newcommand{\includesvg}[1]{%
- \input{images/#1.pdf_tex}%
+\newcommand{\includesvg}[1]{
+ \input{images/#1.pdf_tex}
  } 
 \fi
 ```
