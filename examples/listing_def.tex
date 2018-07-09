@@ -1,0 +1,61 @@
+\usepackage{listings}
+\usepackage{textcomp}
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+\lstdefinelanguage{lua}
+  {morekeywords={and,break,do,else,elseif,end,false,for,function,if,in,local,
+     nil,not,or,repeat,return,then,true,until,while},
+     sensitive=true,
+   morecomment=[l]{--},
+   morecomment=[s]{--[[}{]]--},
+   morestring=[b]",
+   morestring=[d]'
+  }
+\lstdefinestyle{luastyle}
+{
+	numbers=left,
+	stepnumber=5,    
+	firstnumber=1,
+	keywordstyle=\color{blue},
+	numberfirstline=true,
+	numbersep=2pt, % how far the line-numbers are from the code 
+	numberstyle=\tiny\color{gray}, % the style that is used for the line-numbers
+	xleftmargin=5pt,%framexleftmargin=5mm,
+	language=lua,
+	inputencoding=utf8x,
+	backgroundcolor=\color[rgb]{0.95,0.95,0.95},
+	tabsize=2,
+	rulecolor=,
+	basicstyle=\footnotesize \ttfamily,
+	upquote=true,
+	aboveskip={1.0\baselineskip},
+	columns=fixed,
+	showstringspaces=false,
+	extendedchars=true,
+	breaklines=true,
+	prebreak = \raisebox{0ex}[0ex][0ex]{\ensuremath{\hookleftarrow}},
+	frame=lines,
+	showtabs=false,
+	showspaces=false,
+	showstringspaces=false,
+	identifierstyle=\ttfamily,
+	commentstyle=\color[rgb]{0.133,0.545,0.133},
+	stringstyle=\color[rgb]{0.627,0.126,0.941},
+	captionpos=b,
+}  
+
+
+
+% for a dark grey box around the captions of the listings
+\DeclareCaptionFont{white}{\color{white}}
+\DeclareCaptionFormat{listing}{\colorbox[cmyk]{0.43, 0.35, 0.35,0.01}{\parbox{\columnwidth}{\hspace{0pt}#1#2#3}}} 
+\captionsetup[lstlisting]{format=listing,labelfont=white,textfont=white, singlelinecheck=false, margin=0pt, font={bf,footnotesize}}
+  
+%\lstnewenvironment{luaenv}[1][]{ 
+%	\lstset{ 
+%		label=#1,
+% 		style=luastyle}}{}
+%
+%
+

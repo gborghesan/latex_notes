@@ -1,0 +1,158 @@
+\documentclass[twocolumn]{article}
+\usepackage{cite}
+
+\usepackage[dvips]{graphicx}
+\usepackage{psfrag}
+\usepackage[font=footnotesize,caption=false]{subfig}
+\usepackage{url}
+\graphicspath{{.}{./images/}}
+
+
+
+
+% uncomment REFRESHFIGURES command definition to refresh figures (matlab and svg)
+% note that you need inkscape installed
+	% and run pdflatex with the  -shell-escape option
+%
+% > pdflatex -shell-escape
+%
+
+\newcommand{\REFRESHFIGURES}{}
+
+\ifdefined\REFRESHFIGURES
+\usepackage{auto-pst-pdf}%this one is for eps 
+\newcommand{\executeiffilenewer}[3]{%
+ \ifnum\pdfstrcmp{\pdffilemoddate{#1}}%
+ {\pdffilemoddate{#2}}>0%
+ {\immediate\write18{#3}}\fi%
+}
+
+\newcommand{\includesvg}[1]{%
+ \executeiffilenewer{images/#1.svg}{images/#1.pdf_tex}%
+ {inkscape -z -D --file=images/#1.svg %
+ --export-area-page %
+ --export-pdf=images/#1.pdf --export-latex}%
+ \input{images/#1.pdf_tex}%
+}
+\else
+\usepackage[off]{auto-pst-pdf}
+
+\newcommand{\includesvg}[1]{%
+ \input{images/#1.pdf_tex}%
+ } 
+\fi
+%%%%%% example
+%\begin{figure} 
+%\centering
+%  \def\svgwidth{\columnwidth}
+%  \includesvg{image}
+%  \caption{The test image, exported to PDF \emph{with} \LaTeX\ option.}
+%  \label{fig:pdflatex} 
+%\end{figure}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%	
+
+
+
+
+
+%\usepackage[inline]{showlabels}
+
+
+\usepackage{paralist}
+\newenvironment{inparlist}{\begin{inparaenum}[\itshape i)]}{\end{inparaenum}}
+
+
+
+
+\usepackage{xstring}
+\usepackage{todonotes}
+\newcommand{\rmk}[2]{%
+    \IfEqCase{#1}{%
+        {OldText}{\todo[inline,color=green!40]{\textbf{#1}: #2}}%
+        {Gianni}{\todo[inline,color=red!20]{\textbf{#1}: #2}}%
+        {Laure}{\todo[inline,color=red!30]{\textbf{#1}: #2}}%
+    }[{\todo[inline,color=green!10]{\textbf{#1}: #2}}]%
+}%
+
+
+
+
+\usepackage{flushend}
+\usepackage{xspace}
+
+
+
+% correct bad hyphenation here
+\hyphenation{op-tical net-works semi-conduc-tor off-line }
+
+
+\usepackage{xspace}
+\newcommand{\eg}{\textit{e.g.}\xspace}
+\usepackage{cleveref}
+\usepackage{nicefrac}
+
+\crefformat{equation}{(#2#1#3)}
+\crefformat{section}{Sec.~#2#1#3}
+\crefformat{figure}{Fig.~#2#1#3}
+\crefformat{paragraph}{par.~#2#1#3}
+\crefformat{lstlisting}{Listing~#2#1#3}
+\crefmultiformat{lstlisting}{Listings~#2#1#3}%
+{ and~#2#1#3}{, #2#1#3}{ and~#2#1#3} 
+
+
+\include{listing_def}
+
+
+\title{Examples of latex usages}
+\author{
+G.~Borghesan
+}
+
+\begin{document}
+
+
+\maketitle
+
+We will \begin{inparaenum}
+	\item try to use automatic building with images from svg with inkscape, as for \cref{fig:eye_anatomy} and
+	\item eps, with psfragfig, \cref{fig:figs}.
+\end{inparaenum}
+ 
+Then add a listing as in is \cref{listing:lua1}.
+
+\rmk{Gianni}{This is a remark of mine.}
+\rmk{TODO}{This is a todo.}
+
+\lstinputlisting[style=luastyle,float,caption={A lua file},label=listing:lua1]{lua_example.lua}
+ 
+
+\begin{figure}[]
+\centering
+  \def\svgwidth{\columnwidth}
+  \includesvg{eye_anatomy}
+  \caption{The test image, exported to PDF \emph{with} \LaTeX\ option.}
+  \label{fig:eye_anatomy} 
+\end{figure}
+
+\begin{figure} 
+\centering
+\input{psfragFigMacros}
+\subfloat[A nice figure \label{fig:sub:1}]
+ {
+ \psfragfig[width=0.9\columnwidth]{images/Modes}
+ }\\
+\subfloat[Another nice figure  \label{fig:sub:2}]
+ {
+ \psfragfig[width=0.9\columnwidth]{segmentation}
+ }  
+\caption{Nice figures}
+\label{fig:figs}
+\end{figure}
+
+
+
+
+
+%\subsubsection*{Counts of words} 
+%\wordcount
+\end{document} 

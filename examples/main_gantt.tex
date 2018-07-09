@@ -1,0 +1,71 @@
+\documentclass{article}
+\usepackage{pgfgantt}
+
+\usepackage[a4paper,vmargin={1mm,1mm},hmargin={5mm,5mm}]{geometry}
+%\usepackage{fontspec}
+%\setmainfont[
+%BoldFont={CALIBRIB.TTF}, 
+%ItalicFont={CALIBRII.TTF},
+%BoldItalicFont={CALIBRIZ.TTF}
+%]{Calibri.ttf} 
+
+% \newcommand{\del}[5]{\ganttmilestone{ \scriptsize {\begin{tabular}[r]{@{}r@{}}#2\\[-2pt]#3 \textbf{(#4)}\end{tabular}\,}\large{#1}}{#5}}
+
+\newcommand{\del}[5]{
+	\ganttmilestone{ \scriptsize {\begin{tabular}[r]{@{}r@{}}#2\\[-2pt]#3\end{tabular}\,}\large{#1}}{#5}
+	\ganttmilestone[inline,
+	milestone inline label node/.style={left=1mm}]{ \tiny{\textbf{#4}}}{#5}
+}
+\newcommand{\delsec}[2]{\ganttmilestone[inline,
+	milestone inline label node/.style={left=1mm}]{ \tiny{\textbf{#1}}}{#2}}
+
+\newcommand{\delup}[2]{\ganttmilestone[inline,
+	milestone inline label node/.style={above=-1mm}
+	]{ \tiny{\textbf{#1}}}{#2}}
+\newcommand{\deldown}[2]{\ganttmilestone[inline,
+	milestone inline label node/.style={below=-1mm}]{ \tiny{\textbf{#1}}}{#2}}
+
+\newcommand{\milestone}[4]{\ganttmilestone[milestone/.style={fill=orange, draw=black, rounded corners=2pt}]{ \scriptsize {\begin{tabular}[r]{@{}r@{}}#2\\[-2pt]#3\end{tabular}}\, \large{#1}}{#4}}
+
+\newcommand{\milestoneUp}[2]{\ganttmilestone[inline,
+	milestone inline label node/.style={above=-1mm},
+	milestone/.style={fill=orange, draw=black, rounded corners=2pt}]{ \tiny{\textbf{#1}}}{#2}}
+
+
+%\newcommand{\task}[5]{\ganttbar{\large {#1} \scriptsize {\shortstack[l]{#2\\#3}}}{#4}{#5}}
+\newcommand{\task}[5]{\ganttbar[bar/.append style={fill=red!50,rounded corners=3pt}]{\scriptsize {\begin{tabular}[r]{@{}r@{}}#2\\[-2pt]#3\end{tabular}}
+		\,\large {#1}}{#4}{#5} }
+
+\newcommand{\WP}[5]{\ganttgroup{ \scriptsize {\begin{tabular}[r]{@{}r@{}}#2\\[-2pt]#3\end{tabular}}
+		\,\large {#1}}{#4}{#5}}
+\begin{document}
+	\pagestyle{empty}
+\begin{ganttchart}
+[
+bar /.append style={fill=red!50},
+bar label anchor/.append style={align=left, text width=16em}, 
+group label anchor/.append style={align=left, text width=16em}, 
+milestone label anchor/.append style={align=left, text width=16em}, 
+y unit chart=0.5cm, x unit=0.25cm,vgrid={*2{white},*1{black, dashed}},
+group /.append style={draw=black, fill=green!50}
+]{1}{48}
+\gantttitle{Year 1}{12} \gantttitle{Year 2}{12} \gantttitle{Year 3}{12} \gantttitle{Year 4}{12} \\
+
+\WP{WP 1}{My}
+		 {work package}{1}{18} \\
+\task{T1.1}{my first}{task}{1}{4} \\
+\task{T1.1}{my second}{task}{5}{18} \\
+\del{D1.1}{my first}{deliverable}{KUL}{3}\\		
+%%%%%%%%%%%
+\WP{WP 2}{My second}
+	{work package}{4}{29} \\
+\task{T2.1}{another task}
+	{in Wp 2}{4}{24} \\
+\task{T2.1}{another task}
+	{in Wp 2}{7}{29} \\		   
+%%%%%%%%%%%
+\ganttbar[]{Milestones}{1}{48}\\
+\milestone{M1.1}{First }{  Milestone  }{3}\\
+
+\end{ganttchart}
+\end{document}

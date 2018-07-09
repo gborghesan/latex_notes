@@ -254,9 +254,17 @@ group /.append style={draw=black, fill=green!50}
 \end{document}
 ```
 
+to generate an image from the tex, I have a bash script with the following
+```bash
+lualatex main_gantt.tex
+pdfcrop --margins 10 main_gantt.pdf main_gantt_crop.pdf
+convert -geometry 1600x1600 -density 800x800 -quality 100 main_gantt_crop.pdf main_gantt.png
+``` 
+lualatex is need if the extra font is used.
+
 ## Define new commands for words that are used often
 The _xspace_ commands taks care that a space is added after a word, only if it is not a comma or a point.
-in the preable:
+in the preamble:
 ```
 \usepackage{xspace}
 \newcommand{\eg}{\textit{e.g.}\xspace}
