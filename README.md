@@ -110,6 +110,7 @@ look at the [package documentation](http://tug.ctan.org/tex-archive/macros/latex
 To snippets of code in latex, I use the package _listings_
 it has already some syntax higlight done for some languages.if you need to define your language (syntax higlighting) and the way it is presented (listing style), this is possible in the preable:
 ```latex
+
 \usepackage{listings}
 \usepackage{textcomp}
 \definecolor{dkgreen}{rgb}{0,0.6,0}
@@ -126,33 +127,42 @@ it has already some syntax higlight done for some languages.if you need to defin
   }
 \lstdefinestyle{luastyle}
 {
-    numbers=left,
-    stepnumber=5,    
-    firstnumber=1,
-    numberfirstline=true,
-    numbersep=2pt, % how far the line-numbers are from the code 
-    numberstyle=\tiny\color{gray}, % the style that is used for the line-numbers
-    xleftmargin=5pt,%framexleftmargin=5mm,
-    language=lua,
-    inputencoding=utf8x,
-    backgroundcolor=\color[rgb]{0.95,0.95,0.95},
-    tabsize=2,
-    rulecolor=,
-        basicstyle=\footnotesize \ttfamily,
-        upquote=true,
-        aboveskip={1.0\baselineskip},
-        columns=fixed,
-        showstringspaces=false,
-        extendedchars=true,
-        breaklines=true,
-        prebreak = \raisebox{0ex}[0ex][0ex]{\ensuremath{\hookleftarrow}},
-        showtabs=false,
-        showspaces=false,
-        showstringspaces=false,
-        identifierstyle=\ttfamily,
-        commentstyle=\color[rgb]{0.133,0.545,0.133},
-        stringstyle=\color[rgb]{0.627,0.126,0.941},
+	numbers=left,
+	stepnumber=5,    
+	firstnumber=1,
+	keywordstyle=\color{blue},
+	numberfirstline=true,
+	numbersep=2pt, % how far the line-numbers are from the code 
+	numberstyle=\tiny\color{gray}, % the style that is used for the line-numbers
+	xleftmargin=5pt,%framexleftmargin=5mm,
+	language=lua,
+	inputencoding=utf8x,
+	backgroundcolor=\color[rgb]{0.95,0.95,0.95},
+	tabsize=2,
+	rulecolor=,
+	basicstyle=\footnotesize \ttfamily,
+	upquote=true,
+	aboveskip={1.0\baselineskip},
+	columns=fixed,
+	showstringspaces=false,
+	extendedchars=true,
+	breaklines=true,
+	prebreak = \raisebox{0ex}[0ex][0ex]{\ensuremath{\hookleftarrow}},
+	frame=lines,
+	showtabs=false,
+	showspaces=false,
+	showstringspaces=false,
+	identifierstyle=\ttfamily,
+	commentstyle=\color[rgb]{0.133,0.545,0.133},
+	stringstyle=\color[rgb]{0.627,0.126,0.941},
+	captionpos=b,
 }  
+
+\lstnewenvironment{luaenv}[1][]{ 
+	\lstset{ 
+		label=#1,
+ 		style=luastyle}}{}
+
 ```
 then to add a snippet from a file:
 ```
@@ -162,97 +172,8 @@ The package has many possible options,to be checked in the [documentation](https
 
 ## Gantt charts
 Practically the only way i found to make these kind of charts, is tu use the _pgfgantt_ package.
-An example is the following:
-```
-\documentclass{article}
-\usepackage{pgfgantt}
+An example is in the [main_gantt.tex](examples/main_gantt.tex)
 
-\usepackage[a4paper,vmargin={1mm,1mm},hmargin={5mm,5mm}]{geometry}
-
-
-%optional, to change the fonts, font files must be in the same directory
-%\usepackage{fontspec}
-% \setmainfont[BoldFont={CALIBRIB.TTF}, ItalicFont={CALIBRII.TTF},BoldItalicFont={CALIBRIZ.TTF}]{Calibri.ttf} 
- 
-
-% deliverable
- \newcommand{\del}[5]{
- \ganttmilestone{ \scriptsize {\begin{tabular}[r]{@{}r@{}}#2\\[-2pt]#3\end{tabular}\,}\large{#1}}{#5}
- \ganttmilestone[inline,
- milestone inline label node/.style={left=1mm}]{ \tiny{\textbf{#4}}}{#5}
- }
-  \newcommand{\delsec}[2]{\ganttmilestone[inline,
- milestone inline label node/.style={left=1mm}]{ \tiny{\textbf{#1}}}{#2}}
- 
-  \newcommand{\milestone}[4]{\ganttmilestone[milestone/.style={fill=orange, draw=black, rounded corners=2pt}]{ \scriptsize {\begin{tabular}[r]{@{}r@{}}#2\\[-2pt]#3\end{tabular}}\, \large{#1}}{#4}}
-  
- %\newcommand{\task}[5]{\ganttbar{\large {#1} \scriptsize {\shortstack[l]{#2\\#3}}}{#4}{#5}}
-\newcommand{\task}[5]{\ganttbar[bar/.append style={fill=red!50,rounded corners=3pt}]{\scriptsize {\begin{tabular}[r]{@{}r@{}}#2\\[-2pt]#3\end{tabular}}
- \,\large {#1}}{#4}{#5} }
- 
-\newcommand{\WP}[5]{\ganttgroup{ \scriptsize {\begin{tabular}[r]{@{}r@{}}#2\\[-2pt]#3\end{tabular}}
- \,\large {#1}}{#4}{#5}}
-\begin{document}
-\pagestyle{empty}
-%[vgrid, hgrid, bar label font=\Large,bar label text={--#1$\rightarrow$}]{
-\begin{ganttchart}
-[
-bar /.append style={fill=red!50},
-bar label anchor/.append style={align=left, text width=16em}, 
-group label anchor/.append style={align=left, text width=16em}, 
-milestone label anchor/.append style={align=left, text width=16em}, 
-y unit chart=0.5cm, x unit=0.25cm,vgrid={*2{white},*1{black, dashed}},
-group /.append style={draw=black, fill=green!50}
-]{1}{48}
-
-
-
- \newcommand{\del}[5]{
- \ganttmilestone{ \scriptsize {\begin{tabular}[r]{@{}r@{}}#2\\[-2pt]#3\end{tabular}\,}\large{#1}}{#5}
- \ganttmilestone[inline,
- milestone inline label node/.style={left=1mm}]{ \tiny{\textbf{#4}}}{#5}
- }
-  \newcommand{\delsec}[2]{\ganttmilestone[inline,
- milestone inline label node/.style={left=1mm}]{ \tiny{\textbf{#1}}}{#2}}
- 
-  \newcommand{\milestone}[4]{\ganttmilestone[milestone/.style={fill=orange, draw=black, rounded corners=2pt}]{ \scriptsize {\begin{tabular}[r]{@{}r@{}}#2\\[-2pt]#3\end{tabular}}\, \large{#1}}{#4}}
-  
- %\newcommand{\task}[5]{\ganttbar{\large {#1} \scriptsize {\shortstack[l]{#2\\#3}}}{#4}{#5}}
-\newcommand{\task}[5]{\ganttbar[bar/.append style={fill=red!50,rounded corners=3pt}]{\scriptsize {\begin{tabular}[r]{@{}r@{}}#2\\[-2pt]#3\end{tabular}}
- \,\large {#1}}{#4}{#5} }
- 
-\newcommand{\WP}[5]{\ganttgroup{ \scriptsize {\begin{tabular}[r]{@{}r@{}}#2\\[-2pt]#3\end{tabular}}
- \,\large {#1}}{#4}{#5}}
-\begin{document}
-\pagestyle{empty}
-%[vgrid, hgrid, bar label font=\Large,bar label text={--#1$\rightarrow$}]{
-\begin{ganttchart}
-[
-bar /.append style={fill=red!50},
-bar label anchor/.append style={align=left, text width=16em}, 
-group label anchor/.append style={align=left, text width=16em}, 
-milestone label anchor/.append style={align=left, text width=16em}, 
-y unit chart=0.5cm, x unit=0.25cm,vgrid={*2{white},*1{black, dashed}},
-group /.append style={draw=black, fill=green!50}
-]{1}{48}
-\gantttitle{Year 1}{12} \gantttitle{Year 2}{12} \gantttitle{Year 3}{12} \gantttitle{Year 4}{12} \\
-%\gantttitlelist{1,...,12}{1} \gantttitlelist{1,...,12}{1} \gantttitlelist{1,...,12}{1} \\
-\WP{WP 1}{My}
-		 {work package}{1}{48} \\
-\task{T1.1}{my first}{task}{1}{4} \\
-\del{D1.1}{my first}{deliverable}{KUL}{3}\\		
-%%%%%%%%%%%
-\WP{WP 2}{My second}
-		 {work package}{1}{48} \\
-\task{T2.1}{another task}
-		   {in Wp 2}{1}{24} \\
-%%%%%%%%%%%
-\ganttbar[]{Milestones}{1}{48}\\
-\milestone{M1.1}{First }{  Milestone  }{3}\\
-
-\end{ganttchart}
-\end{document}
-```
 
 to generate an image from the tex, I have a bash script with the following
 ```bash
@@ -261,6 +182,10 @@ pdfcrop --margins 10 main_gantt.pdf main_gantt_crop.pdf
 convert -geometry 1600x1600 -density 800x800 -quality 100 main_gantt_crop.pdf main_gantt.png
 ``` 
 lualatex is need if the extra font is used.
+
+the result looks like the following
+
+![Gantt chart](images/main_gantt.png "Gantt chart")
 
 ## Define new commands for words that are used often
 The _xspace_ commands taks care that a space is added after a word, only if it is not a comma or a point.
