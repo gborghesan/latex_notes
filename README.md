@@ -89,4 +89,168 @@ Following examples insert two subfigures (and needs also `\usepackage{subfig}` i
 \caption{Main caption of the figure \label{fig:main_figure}}
 \end{figure}
 ```
-The command `\psfragfig` is part of the pstool package. it automatically generates a pdf files that contains all the images, with the text already inthere. is quite handy also for figure reuse.
+The command `\psfragfig` is part of the pstool package. it automatically generates a pdf files that contains all the images, with the text already in there. is quite handy also for figure reuse.
+
+## Reference
+Instead of putting the type of reference before the `\ref` command, e.g. `Fig.~\ref{fig:myfig}`, I use the package _cleverref_ . This package gives the command `\cref{}`, that automatically recognises the type of reference adding the type. in case the reference need to have the first letter capitalised, the command `\Cref` is also available.
+If the default behaviuor is not of (e.g. you what _Fig. 1_ in place of _Figure 1_ in the text)it is possible to define the behaviuor.
+```latex
+\crefformat{equation}{(#2#1#3)}
+\crefformat{section}{Sec.~#2#1#3}
+\crefformat{figure}{Fig.~#2#1#3}
+\crefformat{paragraph}{par.~#2#1#3}
+\crefformat{lstlisting}{Listing~#2#1#3}
+\crefmultiformat{lstlisting}{Listings~#2#1#3}%
+{ and~#2#1#3}{, #2#1#3}{ and~#2#1#3} 
+```
+the last line specify what to do two or more listings (will be on that in a moment) are present.
+look at the [package documentation](http://tug.ctan.org/tex-archive/macros/latex/contrib/cleveref/cleveref.pdf), sincethe package has many more options.
+
+## Source code.
+To snippets of code in latex, I use the package _listings_
+it has already some syntax higlight done for some languages.if you need to define your language (syntax higlighting) and the way it is presented (listing style), this is possible in the preable:
+```latex
+\usepackage{listings}
+\usepackage{textcomp}
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+\lstdefinelanguage{lua}
+  {morekeywords={and,break,do,else,elseif,end,false,for,function,if,in,local,
+     nil,not,or,repeat,return,then,true,until,while},
+     sensitive=true,
+   morecomment=[l]{--},
+   morecomment=[s]{--[[}{]]--},
+   morestring=[b]",
+   morestring=[d]'
+  }
+\lstdefinestyle{luastyle}
+{
+    numbers=left,
+    stepnumber=5,    
+    firstnumber=1,
+    numberfirstline=true,
+    numbersep=2pt, % how far the line-numbers are from the code 
+    numberstyle=\tiny\color{gray}, % the style that is used for the line-numbers
+    xleftmargin=5pt,%framexleftmargin=5mm,
+    language=lua,
+    inputencoding=utf8x,
+    backgroundcolor=\color[rgb]{0.95,0.95,0.95},
+    tabsize=2,
+    rulecolor=,
+        basicstyle=\footnotesize \ttfamily,
+        upquote=true,
+        aboveskip={1.0\baselineskip},
+        columns=fixed,
+        showstringspaces=false,
+        extendedchars=true,
+        breaklines=true,
+        prebreak = \raisebox{0ex}[0ex][0ex]{\ensuremath{\hookleftarrow}},
+        showtabs=false,
+        showspaces=false,
+        showstringspaces=false,
+        identifierstyle=\ttfamily,
+        commentstyle=\color[rgb]{0.133,0.545,0.133},
+        stringstyle=\color[rgb]{0.627,0.126,0.941},
+}  
+```
+then to add a snippet from a file:
+```
+\lstinputlisting[style=luastyle,float,caption={caption of the listing},label=listing: point]{file.lua}
+```
+The package has many possible options,to be checked in the [documentation](https://ctan.org/pkg/listings?lang=en).
+
+## Gantt charts
+Practically the only way i found to make these kind of charts, is tu use the _pgfgantt_ package.
+An example is the following:
+```
+\documentclass{article}
+\usepackage{pgfgantt}
+
+\usepackage[a4paper,vmargin={1mm,1mm},hmargin={5mm,5mm}]{geometry}
+
+
+%optional, to change the fonts, font files must be in the same directory
+%\usepackage{fontspec}
+% \setmainfont[BoldFont={CALIBRIB.TTF}, ItalicFont={CALIBRII.TTF},BoldItalicFont={CALIBRIZ.TTF}]{Calibri.ttf} 
+ 
+
+% deliverable
+ \newcommand{\del}[5]{
+ \ganttmilestone{ \scriptsize {\begin{tabular}[r]{@{}r@{}}#2\\[-2pt]#3\end{tabular}\,}\large{#1}}{#5}
+ \ganttmilestone[inline,
+ milestone inline label node/.style={left=1mm}]{ \tiny{\textbf{#4}}}{#5}
+ }
+  \newcommand{\delsec}[2]{\ganttmilestone[inline,
+ milestone inline label node/.style={left=1mm}]{ \tiny{\textbf{#1}}}{#2}}
+ 
+  \newcommand{\milestone}[4]{\ganttmilestone[milestone/.style={fill=orange, draw=black, rounded corners=2pt}]{ \scriptsize {\begin{tabular}[r]{@{}r@{}}#2\\[-2pt]#3\end{tabular}}\, \large{#1}}{#4}}
+  
+ %\newcommand{\task}[5]{\ganttbar{\large {#1} \scriptsize {\shortstack[l]{#2\\#3}}}{#4}{#5}}
+\newcommand{\task}[5]{\ganttbar[bar/.append style={fill=red!50,rounded corners=3pt}]{\scriptsize {\begin{tabular}[r]{@{}r@{}}#2\\[-2pt]#3\end{tabular}}
+ \,\large {#1}}{#4}{#5} }
+ 
+\newcommand{\WP}[5]{\ganttgroup{ \scriptsize {\begin{tabular}[r]{@{}r@{}}#2\\[-2pt]#3\end{tabular}}
+ \,\large {#1}}{#4}{#5}}
+\begin{document}
+\pagestyle{empty}
+%[vgrid, hgrid, bar label font=\Large,bar label text={--#1$\rightarrow$}]{
+\begin{ganttchart}
+[
+bar /.append style={fill=red!50},
+bar label anchor/.append style={align=left, text width=16em}, 
+group label anchor/.append style={align=left, text width=16em}, 
+milestone label anchor/.append style={align=left, text width=16em}, 
+y unit chart=0.5cm, x unit=0.25cm,vgrid={*2{white},*1{black, dashed}},
+group /.append style={draw=black, fill=green!50}
+]{1}{48}
+
+
+
+ \newcommand{\del}[5]{
+ \ganttmilestone{ \scriptsize {\begin{tabular}[r]{@{}r@{}}#2\\[-2pt]#3\end{tabular}\,}\large{#1}}{#5}
+ \ganttmilestone[inline,
+ milestone inline label node/.style={left=1mm}]{ \tiny{\textbf{#4}}}{#5}
+ }
+  \newcommand{\delsec}[2]{\ganttmilestone[inline,
+ milestone inline label node/.style={left=1mm}]{ \tiny{\textbf{#1}}}{#2}}
+ 
+  \newcommand{\milestone}[4]{\ganttmilestone[milestone/.style={fill=orange, draw=black, rounded corners=2pt}]{ \scriptsize {\begin{tabular}[r]{@{}r@{}}#2\\[-2pt]#3\end{tabular}}\, \large{#1}}{#4}}
+  
+ %\newcommand{\task}[5]{\ganttbar{\large {#1} \scriptsize {\shortstack[l]{#2\\#3}}}{#4}{#5}}
+\newcommand{\task}[5]{\ganttbar[bar/.append style={fill=red!50,rounded corners=3pt}]{\scriptsize {\begin{tabular}[r]{@{}r@{}}#2\\[-2pt]#3\end{tabular}}
+ \,\large {#1}}{#4}{#5} }
+ 
+\newcommand{\WP}[5]{\ganttgroup{ \scriptsize {\begin{tabular}[r]{@{}r@{}}#2\\[-2pt]#3\end{tabular}}
+ \,\large {#1}}{#4}{#5}}
+\begin{document}
+\pagestyle{empty}
+%[vgrid, hgrid, bar label font=\Large,bar label text={--#1$\rightarrow$}]{
+\begin{ganttchart}
+[
+bar /.append style={fill=red!50},
+bar label anchor/.append style={align=left, text width=16em}, 
+group label anchor/.append style={align=left, text width=16em}, 
+milestone label anchor/.append style={align=left, text width=16em}, 
+y unit chart=0.5cm, x unit=0.25cm,vgrid={*2{white},*1{black, dashed}},
+group /.append style={draw=black, fill=green!50}
+]{1}{48}
+\gantttitle{Year 1}{12} \gantttitle{Year 2}{12} \gantttitle{Year 3}{12} \gantttitle{Year 4}{12} \\
+%\gantttitlelist{1,...,12}{1} \gantttitlelist{1,...,12}{1} \gantttitlelist{1,...,12}{1} \\
+\WP{WP 1}{My}
+		 {work package}{1}{48} \\
+\task{T1.1}{my first}{task}{1}{4} \\
+\del{D1.1}{my first}{deliverable}{KUL}{3}\\		
+%%%%%%%%%%%
+\WP{WP 2}{My second}
+		 {work package}{1}{48} \\
+\task{T2.1}{another task}
+		   {in Wp 2}{1}{24} \\
+%%%%%%%%%%%
+\ganttbar[]{Milestones}{1}{48}\\
+\milestone{M1.1}{First }{  Milestone  }{3}\\
+
+\end{ganttchart}
+\end{document}
+```
+
