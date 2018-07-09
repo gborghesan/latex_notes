@@ -254,3 +254,11 @@ group /.append style={draw=black, fill=green!50}
 \end{document}
 ```
 
+## Define new commands for words that are used often
+The _xspace_ commands taks care that a space is added after a word, only if it is not a comma or a point.
+in the preable:
+```
+\usepackage{xspace}
+\newcommand{\eg}{\textit{e.g.}\xspace}
+```
+
