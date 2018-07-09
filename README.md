@@ -1,5 +1,6 @@
 # Latex tips and tricks
 
+
 ## In-line enumeration
 To save space, it is usegful to make a enumered list in the form of _i)_ , _ii)_, etc.
 for doing so, I define the following environment:
@@ -61,6 +62,8 @@ also check there how to make the svgs.
 ```bash
 pdflatex -shell-escape main.tex
 ```
+
+
 ### adding an svg figure
 in the text, to add a figure, the following code can be use
 ```latex
@@ -71,8 +74,9 @@ in the text, to add a figure, the following code can be use
 \end{figure}
 ```
 additionals psfrag commands can be used, before the `includesvg` command.
+
 ### adding an eps figure
-this i do mainly for matlab-generated graphs, but can be useful also for schemes generated with [Dia](https://sourceforge.net/projects/dia-installer/)
+this I do mainly for matlab-generated graphs, but can be useful also for schemes generated with [Dia](https://sourceforge.net/projects/dia-installer/)
 
 Following examples insert two subfigures (and needs also `\usepackage{subfig}` in the preamble)
 ```latex
@@ -90,6 +94,9 @@ Following examples insert two subfigures (and needs also `\usepackage{subfig}` i
 \end{figure}
 ```
 The command `\psfragfig` is part of the pstool package. it automatically generates a pdf files that contains all the images, with the text already in there. is quite handy also for figure reuse.
+
+Have a look to the [main1.tex](examples/main1.tex) file fo a minimally working example.
+
 
 ## Reference
 Instead of putting the type of reference before the `\ref` command, e.g. `Fig.~\ref{fig:myfig}`, I use the package _cleverref_ . This package gives the command `\cref{}`, that automatically recognises the type of reference adding the type. in case the reference need to have the first letter capitalised, the command `\Cref` is also available.
@@ -164,10 +171,17 @@ it has already some syntax higlight done for some languages.if you need to defin
  		style=luastyle}}{}
 
 ```
-then to add a snippet from a file:
+The code above is in a file ([listing_def.tex](examples/listing_def.lua)) that is included in the preable.
+
+Then, to add a snippet of code in the tex document from a separate lua file:
 ```
 \lstinputlisting[style=luastyle,float,caption={caption of the listing},label=listing: point]{file.lua}
 ```
+The result looks like this:
+
+![listings](images/listings.png "Listing Image")
+
+
 The package has many possible options,to be checked in the [documentation](https://ctan.org/pkg/listings?lang=en).
 
 ## Gantt charts
