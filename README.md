@@ -99,9 +99,10 @@ Have a look to the [main1.tex](examples/main1.tex) file fo a minimally working e
 
 
 ## Reference
-Instead of putting the type of reference before the `\ref` command, e.g. `Fig.~\ref{fig:myfig}`, I use the package _cleverref_ . This package gives the command `\cref{}`, that automatically recognises the type of reference adding the type. in case the reference need to have the first letter capitalised, the command `\Cref` is also available.
+Instead of putting the type of reference before the `\ref` command, e.g. `Fig.~\ref{fig:myfig}`, I use the package _cleveref_ . This package gives the command `\cref{}`, that automatically recognises the type of reference adding the type. in case the reference need to have the first letter capitalised, the command `\Cref` is also available.
 If the default behaviuor is not of (e.g. you what _Fig. 1_ in place of _Figure 1_ in the text)it is possible to define the behaviuor.
 ```latex
+\usepackage{cleveref}
 \crefformat{equation}{(#2#1#3)}
 \crefformat{section}{Sec.~#2#1#3}
 \crefformat{figure}{Fig.~#2#1#3}
