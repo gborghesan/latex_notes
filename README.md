@@ -210,3 +210,10 @@ in the preamble:
 \newcommand{\eg}{\textit{e.g.}\xspace}
 ```
 
+## Make a pdf with track changes, w.r.t. the last commit in git
+To see which are the latest changes in a latex document, sometimes work the command ```latexdiff```
+for example, to see the changes of the latest commit and build with latexmk, use:
+
+```
+git latexdiff HEAD~1 --latexmk
+```
