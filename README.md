@@ -217,3 +217,8 @@ for example, to see the changes of the latest commit and build with latexmk, use
 ```
 git latexdiff HEAD~1 --latexmk
 ```
+To see the changes that are not committed vs. the latest commit:
+
+```
+git latexdiff HEAD --
+```
