@@ -1,5 +1,5 @@
 # Latex tips and tricks
-
+To view on-line go to [ https://gborghesan.github.io/latex_notes](https://gborghesan.github.io/latex_notes)
 
 ## In-line enumeration
 To save space, it is usegful to make a enumered list in the form of _i)_ , _ii)_, etc.
