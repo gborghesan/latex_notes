@@ -11,7 +11,7 @@ for doing so, I define the following environment:
 ```
 The usage is the same of _itemize_ environment.
 
-## inclusion of figures ("Easy")
+## Inclusion of figures ("The Easy Way")
 
 This is for figures that have been maede in inkscape; there are 2 options:
 
@@ -29,7 +29,7 @@ This is by far the easiest; note that the `\includesvg` command uses the same co
 In this kind of figure, latex code can be written directly in figures, see the This code is largely taken from [InkscapePDFLaTeX](http://tug.ctan.org/info/svg-inkscape/InkscapePDFLaTeX.pdf) documentation.
 
 
-## complex automatic
+## Inclusion of figures ("Complex and Automatic")
 
 I use mainly two types of figures
 
@@ -40,7 +40,7 @@ for both, I use psfrag commands to have all the text in figure uniform.
 psfrag is a comman that allows to substitute a string in a eps figure with another one. THe main advantage is the it is possible to control the type of charater and size will not scale by scaling the figure. in addittion math formulas can be inserted in the figure.
 See [psfrag documentation](https://ctan.org/pkg/psfrag?lang=en) for more info.
 
-### preamble
+### Preamble
 in the preable, I add the following:
 
 ```latex
@@ -72,6 +72,7 @@ The figure are generated only if the  `\REFRESHFIGURES` is defined.
 The eps files must be in _images_ sub-deirectory
 This code is largely taken from [InkscapePDFLaTeX](http://tug.ctan.org/info/svg-inkscape/InkscapePDFLaTeX.pdf)
 also check there how to make the svgs.
+
 **important**
 
 - Tested in ubuntu
@@ -84,7 +85,7 @@ pdflatex -shell-escape main.tex
 ```
 
 
-### adding an svg figure
+### Adding an svg figure
 in the text, to add a figure, the following code can be use
 ```latex
 \begin{figure}\centering
@@ -95,7 +96,7 @@ in the text, to add a figure, the following code can be use
 ```
 additionals psfrag commands can be used, before the `includesvg` command.
 
-### adding an eps figure
+### Adding an eps figure
 this I do mainly for matlab-generated graphs, but can be useful also for schemes generated with [Dia](https://sourceforge.net/projects/dia-installer/)
 
 Following examples insert two subfigures (and needs also `\usepackage{subfig}` in the preamble)
@@ -118,7 +119,7 @@ The command `\psfragfig` is part of the pstool package. it automatically generat
 Have a look to the [main1.tex](examples/main1.tex) file fo a minimally working example.
 
 
-## Reference
+## References
 Instead of putting the type of reference before the `\ref` command, e.g. `Fig.~\ref{fig:myfig}`, I use the package _cleveref_ . This package gives the command `\cref{}`, that automatically recognises the type of reference adding the type. in case the reference need to have the first letter capitalised, the command `\Cref` is also available.
 If the default behaviuor is not of (e.g. you what _Fig. 1_ in place of _Figure 1_ in the text)it is possible to define the behaviuor.
 ```latex
@@ -134,7 +135,7 @@ If the default behaviuor is not of (e.g. you what _Fig. 1_ in place of _Figure 1
 the last line specify what to do two or more listings (will be on that in a moment) are present.
 look at the [package documentation](http://tug.ctan.org/tex-archive/macros/latex/contrib/cleveref/cleveref.pdf), sincethe package has many more options.
 
-## Source code.
+## Source Codeand other code snippets
 To snippets of code in latex, I use the package _listings_
 it has already some syntax higlight done for some languages.if you need to define your language (syntax higlighting) and the way it is presented (listing style), this is possible in the preable:
 ```latex
