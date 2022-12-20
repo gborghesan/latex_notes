@@ -15,7 +15,7 @@ The usage is the same of _itemize_ environment.
 
 This is for figures that have been maede in inkscape; there are 2 options:
 
-One option is to save directly from inkscape as tex (\textit{LaTeX with PSTricks extensions}) and include the files.
+One option is to save directly from inkscape as tex (`LaTeX with PSTricks extensions`) and include the files.
 
 
 Another option is to save as pdf, with the text saved as latex, as show in the following figure.
@@ -43,7 +43,7 @@ See [psfrag documentation](https://ctan.org/pkg/psfrag?lang=en) for more info.
 ### Preamble
 in the preable, I add the following:
 
-```latex
+```tex
 %\newcommand{\REFRESHFIGURES}{} % uncomment this to regenerate the figures
 \ifdefined\REFRESHFIGURES
 \usepackage{auto-pst-pdf} %this one is for eps 
@@ -87,7 +87,7 @@ pdflatex -shell-escape main.tex
 
 ### Adding an svg figure
 in the text, to add a figure, the following code can be use
-```latex
+```tex
 \begin{figure}\centering
   	\def\svgwidth{\columnwidth}
   	\includesvg{figure_file}
@@ -122,7 +122,7 @@ Have a look to the [main1.tex](examples/main1.tex) file fo a minimally working e
 ## References
 Instead of putting the type of reference before the `\ref` command, e.g. `Fig.~\ref{fig:myfig}`, I use the package _cleveref_ . This package gives the command `\cref{}`, that automatically recognises the type of reference adding the type. in case the reference need to have the first letter capitalised, the command `\Cref` is also available.
 If the default behaviuor is not of (e.g. you what _Fig. 1_ in place of _Figure 1_ in the text)it is possible to define the behaviuor.
-```latex
+```tex
 \usepackage{cleveref}
 \crefformat{equation}{(#2#1#3)}
 \crefformat{section}{Sec.~#2#1#3}
@@ -138,7 +138,7 @@ look at the [package documentation](http://tug.ctan.org/tex-archive/macros/latex
 ## Source Codeand other code snippets
 To snippets of code in latex, I use the package _listings_
 it has already some syntax higlight done for some languages.if you need to define your language (syntax higlighting) and the way it is presented (listing style), this is possible in the preable:
-```latex
+```tex
 
 \usepackage{listings}
 \usepackage{textcomp}
@@ -226,7 +226,7 @@ the result looks like the following
 ## Define new commands for words that are used often
 The _xspace_ commands taks care that a space is added after a word, only if it is not a comma or a point.
 in the preamble:
-```
+```tex
 \usepackage{xspace}
 \newcommand{\eg}{\textit{e.g.}\xspace}
 ```
@@ -235,11 +235,11 @@ in the preamble:
 To see which are the latest changes in a latex document, sometimes work the command ```latexdiff```
 for example, to see the changes of the latest commit and build with latexmk, use:
 
-```
+```bash
 git latexdiff HEAD~1 --latexmk
 ```
 To see the changes that are not committed vs. the latest commit:
 
-```
+```bash
 git latexdiff HEAD --
 ```
