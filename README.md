@@ -11,8 +11,27 @@ for doing so, I define the following environment:
 ```
 The usage is the same of _itemize_ environment.
 
-## inclusion of figures
-I use mainly to types of figures
+## inclusion of figures ("Easy")
+
+This is for figures that have been maede in inkscape; there are 2 options:
+
+One option is to save directly from inkscape as tex (\textit{LaTeX with PSTricks extensions}) and include the files.
+
+
+Another option is to save as pdf, with the text saved as latex, as show in the following figure.
+
+![PDF + Latex](https://i.stack.imgur.com/IrkOZ.png "PDF + Latex")
+
+see also [this page](https://tex.stackexchange.com/questions/151232/exporting-from-inkscape-to-latex-via-tikz).
+
+This is by far the easiest; note that the `\includesvg` command uses the same command of inkscape but directly from shell.
+
+In this kind of figure, latex code can be written directly in figures, see the This code is largely taken from [InkscapePDFLaTeX](http://tug.ctan.org/info/svg-inkscape/InkscapePDFLaTeX.pdf) documentation.
+
+
+## complex automatic
+
+I use mainly two types of figures
 
 - svg files made in inkscape
 - eps files made in matlab
@@ -20,6 +39,7 @@ I use mainly to types of figures
 for both, I use psfrag commands to have all the text in figure uniform.
 psfrag is a comman that allows to substitute a string in a eps figure with another one. THe main advantage is the it is possible to control the type of charater and size will not scale by scaling the figure. in addittion math formulas can be inserted in the figure.
 See [psfrag documentation](https://ctan.org/pkg/psfrag?lang=en) for more info.
+
 ### preamble
 in the preable, I add the following:
 
@@ -50,7 +70,7 @@ in the preable, I add the following:
 ```
 The figure are generated only if the  `\REFRESHFIGURES` is defined.
 The eps files must be in _images_ sub-deirectory
-This code is largely taken from [here](http://tug.ctan.org/info/svg-inkscape/InkscapePDFLaTeX.pdf)
+This code is largely taken from [InkscapePDFLaTeX](http://tug.ctan.org/info/svg-inkscape/InkscapePDFLaTeX.pdf)
 also check there how to make the svgs.
 **important**
 
