@@ -4,7 +4,7 @@ To view on-line go to [ https://gborghesan.github.io/latex_notes](https://gborgh
 ## In-line enumeration
 To save space, it is usegful to make a enumered list in the form of _i)_ , _ii)_, etc.
 for doing so, I define the following environment:
-```
+```tex
 % packages for inline lists
 \usepackage{paralist}
 \newenvironment{inparlist}{\begin{inparaenum}[\itshape i)]}{\end{inparaenum}}
