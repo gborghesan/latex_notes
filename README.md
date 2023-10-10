@@ -2,29 +2,29 @@
 To view on-line go to [ https://gborghesan.github.io/latex_notes](https://gborghesan.github.io/latex_notes)
 
 ## In-line enumeration
-To save space, it is usegful to make a enumered list in the form of _i)_ , _ii)_, etc.
-for doing so, I define the following environment:
+To save space, it is useful to make an enumerated list in the form of _i)_ , _ii)_, etc.
+To do so, I define the following environment:
 ```tex
 % packages for inline lists
 \usepackage{paralist}
 \newenvironment{inparlist}{\begin{inparaenum}[\itshape i)]}{\end{inparaenum}}
 ```
-The usage is the same of _itemize_ environment.
+The use is the same as the _itemize_ environment.
 
 ## Inclusion of figures ("The Easy Way")
 
-This is for figures that have been maede in inkscape; there are 2 options:
+This is for figures that have been made in Inkscape; there are 2 options:
 
-One option is to save directly from inkscape as tex (`LaTeX with PSTricks extensions`) and include the files.
+One option is to save directly from Inkscape as tex (`LaTeX with PSTricks extensions`) and include the files.
 
 
-Another option is to save as pdf, with the text saved as latex, as show in the following figure.
+Another option is to save it as a pdf, with the text saved as latex, as shown in the following figure.
 
 ![PDF + Latex](https://i.stack.imgur.com/IrkOZ.png "PDF + Latex")
 
 see also [this page](https://tex.stackexchange.com/questions/151232/exporting-from-inkscape-to-latex-via-tikz).
 
-This is by far the easiest; note that the `\includesvg` command uses the same command of inkscape but directly from shell.
+This is by far the easiest; note that the `\includesvg` command uses the same command of Inkscape but directly from the shell.
 
 In this kind of figure, latex code can be written directly in figures, see the This code is largely taken from [InkscapePDFLaTeX](http://tug.ctan.org/info/svg-inkscape/InkscapePDFLaTeX.pdf) documentation.
 
@@ -33,15 +33,16 @@ In this kind of figure, latex code can be written directly in figures, see the T
 
 I use mainly two types of figures
 
-- svg files made in inkscape
-- eps files made in matlab
+- svg files made in Inkscape
+- eps files made in Matlab
 
-for both, I use psfrag commands to have all the text in figure uniform.
-psfrag is a comman that allows to substitute a string in a eps figure with another one. THe main advantage is the it is possible to control the type of charater and size will not scale by scaling the figure. in addittion math formulas can be inserted in the figure.
+for both, I use psfrag commands to have all the text in the figure uniform.
+psfrag is a command that allows to substitute a string in an EPS figure with another one. THe main advantage is the it is possible to control the type of character and size will not scale by scaling the figure.
+In addition, math formulas can be inserted in the figure.
 See [psfrag documentation](https://ctan.org/pkg/psfrag?lang=en) for more info.
 
 ### Preamble
-in the preable, I add the following:
+in the preamble, I add the following:
 
 ```tex
 %\newcommand{\REFRESHFIGURES}{} % uncomment this to regenerate the figures
@@ -68,17 +69,17 @@ in the preable, I add the following:
  } 
 \fi
 ```
-The figure are generated only if the  `\REFRESHFIGURES` is defined.
-The eps files must be in _images_ sub-deirectory
-This code is largely taken from [InkscapePDFLaTeX](http://tug.ctan.org/info/svg-inkscape/InkscapePDFLaTeX.pdf)
-also check there how to make the svgs.
+The figures are generated only if the  `\REFRESHFIGURES` is defined.
+The EPS files must be in _images_ sub-deirectory
+This code is largely taken from [InkscapePDFLaTeX](http://tug.ctan.org/info/svg-inkscape/InkscapePDFLaTeX.pdf).
+Also, check in such document how to make the svgs.
 
 **important**
 
-- Tested in ubuntu
+- Tested in Ubuntu
 - pdflatex is used for compiling
-- pdf latex needs to call inkscape so
-  - inkscape must be istalled
+- pdflatex needs to call Inkscape so
+  - Inkscape must be installed
   - pdflatex must be called with the *-shell-escape* flag, e.g.:
 ```bash
 pdflatex -shell-escape main.tex
@@ -86,7 +87,7 @@ pdflatex -shell-escape main.tex
 
 
 ### Adding an svg figure
-in the text, to add a figure, the following code can be use
+in the text, to add a figure, the following code can be used
 ```tex
 \begin{figure}\centering
   	\def\svgwidth{\columnwidth}
@@ -97,7 +98,7 @@ in the text, to add a figure, the following code can be use
 additionals psfrag commands can be used, before the `includesvg` command.
 
 ### Adding an eps figure
-this I do mainly for matlab-generated graphs, but can be useful also for schemes generated with [Dia](https://sourceforge.net/projects/dia-installer/)
+this I do mainly for Matlab-generated graphs, but can be useful also for schemes generated with [Dia](https://sourceforge.net/projects/dia-installer/)
 
 Following examples insert two subfigures (and needs also `\usepackage{subfig}` in the preamble)
 ```latex
@@ -120,8 +121,10 @@ Have a look to the [main1.tex](examples/main1.tex) file fo a minimally working e
 
 
 ## References
-Instead of putting the type of reference before the `\ref` command, e.g. `Fig.~\ref{fig:myfig}`, I use the package _cleveref_ . This package gives the command `\cref{}`, that automatically recognises the type of reference adding the type. in case the reference need to have the first letter capitalised, the command `\Cref` is also available.
-If the default behaviuor is not of (e.g. you what _Fig. 1_ in place of _Figure 1_ in the text)it is possible to define the behaviuor.
+Instead of putting the type of reference before the `\ref` command, e.g. `Fig.~\ref{fig:myfig}`, I use the package _cleveref_.
+This package gives the command `\cref{}`, which automatically recognises the type of reference by adding the type.
+In case the reference need to have the first letter capitalised, the command `\Cref` is also available.
+If the default behaviour is not of (e.g. you what _Fig. 1_ in place of _Figure 1_ in the text)it is possible to define the behaviour.
 ```tex
 \usepackage{cleveref}
 \crefformat{equation}{(#2#1#3)}
@@ -135,9 +138,10 @@ If the default behaviuor is not of (e.g. you what _Fig. 1_ in place of _Figure 1
 the last line specify what to do two or more listings (will be on that in a moment) are present.
 look at the [package documentation](http://tug.ctan.org/tex-archive/macros/latex/contrib/cleveref/cleveref.pdf), sincethe package has many more options.
 
-## Source Codeand other code snippets
+## Source Code and other code snippets
 To snippets of code in latex, I use the package _listings_
-it has already some syntax higlight done for some languages.if you need to define your language (syntax higlighting) and the way it is presented (listing style), this is possible in the preable:
+it has already some syntax highlight done for some languages.
+If you need to define your language (syntax highlighting) and the way it is presented (listing style), this is possible in the preamble:
 ```tex
 
 \usepackage{listings}
@@ -193,9 +197,9 @@ it has already some syntax higlight done for some languages.if you need to defin
  		style=luastyle}}{}
 
 ```
-The code above is in a file ([listing_def.tex](examples/listing_def.lua)) that is included in the preable.
+The code above is in a file ([listing_def.tex](examples/listing_def.lua)) that is included in the preamble.
 
-Then, to add a snippet of code in the tex document from a separate lua file:
+Then, add a snippet of code in the tex document from a separate lua file:
 ```
 \lstinputlisting[style=luastyle,float,caption={caption of the listing},label=listing: point]{file.lua}
 ```
@@ -204,10 +208,10 @@ The result looks like this:
 ![listings](images/listings.png "Listing Image")
 
 
-The package has many possible options,to be checked in the [documentation](https://ctan.org/pkg/listings?lang=en).
+The package has many possible options, to be checked in the [documentation](https://ctan.org/pkg/listings?lang=en).
 
 ## Gantt charts
-Practically the only way i found to make these kind of charts, is tu use the _pgfgantt_ package.
+Practically the only way I found to make this kind of charts, is to use the _pgfgantt_ package.
 An example is in the [main_gantt.tex](examples/main_gantt.tex)
 
 
@@ -217,7 +221,7 @@ lualatex main_gantt.tex
 pdfcrop --margins 10 main_gantt.pdf main_gantt_crop.pdf
 convert -geometry 1600x1600 -density 800x800 -quality 100 main_gantt_crop.pdf main_gantt.png
 ``` 
-lualatex is need if the extra font is used.
+lualatex is needed if the extra font is used.
 
 the result looks like the following
 
