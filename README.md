@@ -11,6 +11,32 @@ To do so, I define the following environment:
 ```
 The use is the same as the _itemize_ environment.
 
+## Single column documents on half pages for hand correction or the todo package
+In the preamble, add
+```tex
+\usepackage{geometry}
+
+% Define a draft mode toggle if not already defined
+\newif\ifdraft
+%\drafttrue % Set to \draftfals% 
+\draftfalse 
+
+% Conditional layout for single-column draft
+\ifdraft
+ \usepackage[inner]{showlabels}
+  \geometry{left=2.5cm, right=10cm, top=2cm, bottom=2cm} % Adjust as desired
+  \onecolumn % Switch to single-column layout
+\fi
+```
+It is possible to add the structure of  the text and the todo list for the document, for example after the abstract:
+```tex
+\ifdraft
+\tableofcontents
+\listoftodos
+\fi
+```
+Check the [todolist](https://tug.ctan.org/macros/latex/contrib/todonotes/todonotes.pdf) for info on how to make todos.
+
 ## Inclusion of figures ("The Easy Way")
 
 This is for figures that have been made in Inkscape; there are 2 options:
