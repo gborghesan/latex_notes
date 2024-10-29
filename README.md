@@ -11,7 +11,7 @@ To do so, I define the following environment:
 ```
 The use is the same as the _itemize_ environment.
 
-## Single column documents on half pages for hand correction or the todo package
+## Single column imagination, on half page,  for hand correction or to make space for the todo package
 In the preamble, add
 ```tex
 \usepackage{geometry}
